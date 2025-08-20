@@ -1,0 +1,33 @@
+{
+  "university_settings": {
+    "base_url": "https://banner.university.edu/StudentRegistrationSsb/ssb",
+    "term_search_endpoint": "/term/search",
+    "course_search_endpoint": "/searchResults/searchResults"
+  },
+  "email_settings": {
+    "sender_email": "your.email@gmail.com",
+    "sender_password": "yourapppassword",
+    "receiver_email": "your.email@gmail.com",
+    "smtp_server": "smtp.gmail.com",
+    "smtp_port": 587
+  },
+  "script_settings": {
+    "main_interval_seconds": 300,
+    "inter_course_delay_seconds": 60,
+    "consecutive_error_limit": 3
+  },
+  "courses_to_check": [
+    {
+      "crn": "12345",
+      "subject": "HIST",
+      "course_number": "101",
+      "term_id": "202509"
+    },
+    {
+      "crn": "98765",
+      "subject": "MATH",
+      "course_number": "101",
+      "term_id": "202601"
+    } 
+  ]
+}
