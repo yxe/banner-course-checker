@@ -12,23 +12,45 @@ def send_email(subject, body, config):
   Sends a notification email using settings from the config file.
   """
   settings = config['email_settings']
+
+  # Standard email
   msg = EmailMessage()
   msg.set_content(body)
   msg['Subject'] = subject
   msg['From'] = settings["sender_email"]
   msg['To'] = settings["receiver_email"]
 
-  print(f"-> Sending notification email to {settings['receiver_email']}...", flush=True)
+  print(f"-> Preparing to send notification to {settings['receiver_email']}...", flush=True)
+
+  # SMS email (optional)
+  sms_target = settings.get("sms_gateway_email")
+  msg_sms = None
+  if sms_target:
+    print(f"-> SMS gateway configured. Preparing SMS for {sms_target}...", flush=True)
+    # For SMS, use the standard email subject as the message body
+    sms_body = subject
+    msg_sms = EmailMessage()
+    msg_sms.set_content(sms_body)
+    msg_sms['From'] = settings["sender_email"]
+    msg_sms['To'] = sms_target
 
   try:
     context = ssl.create_default_context()
     with smtplib.SMTP(settings["smtp_server"], settings["smtp_port"]) as server:
       server.starttls(context=context)
       server.login(settings["sender_email"], settings["sender_password"])
+
+      # Send standard email
       server.send_message(msg)
-    print("-> Email sent successfully.", flush=True)
+      print(f"-> Email sent successfully to {settings['receiver_email']}.", flush=True)
+
+      # Send SMS email if it exists
+      if msg_sms:
+        server.send_message(msg_sms)
+        print(f"-> SMS notification sent successfully to {sms_target}.", flush=True)
+
   except Exception as e:
-    print(f"-> Failed to send email: {e}", flush=True)
+    print(f"-> Failed to send notification(s): {e}", flush=True)
 
 def check_course_api(course, config, session, debug_mode=False):
   """

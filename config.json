@@ -8,6 +8,7 @@
     "sender_email": "your.email@gmail.com",
     "sender_password": "yourapppassword",
     "receiver_email": "your.email@gmail.com",
+    "sms_gateway_email": "1234567890@msg.carrier.com",
     "smtp_server": "smtp.gmail.com",
     "smtp_port": 587
   },

@@ -8,6 +8,8 @@ A script that automatically checks for available seats in full university course
 
 * **Email notifications**: Sends an email alert immediately when a spot opens up.
 
+* **SMS notifications**: Sends an SMS alert using public email to SMS gateways.
+
 * **Multi-course support**: Monitor multiple courses at once.
 
 * **Configurable**: Easily adapt to different universities by changing URLs in the config file.
@@ -70,7 +72,9 @@ Follow the example config file `config.json` and edit it with your specific deta
 
 **term_id** can usually be acquired via /StudentRegistrationSsb/ssb/classSearch/getTerms?offset=1&max=10 
 
-**sender_password** you will need to generate an app password in gmail. It will be shown to you with spaces for readability, but enter it without spaces in the config. Instructions on how to do that can be found [here](https://support.google.com/accounts/answer/185833).
+**sender_password**: you will need to generate an app password in gmail. It will be shown to you with spaces for readability, but enter it without spaces in the config. Instructions on how to do that can be found [here](https://support.google.com/accounts/answer/185833).
+
+**sms_gateway_email**: you can leave this blank if you don't want to receive SMS notifications. If your carrier has an email to SMS gateway, use that address. For a list of gateways, check [here](https://email2sms.info/).
 
 **intervals**: be mindful and respectful. Choose appropriate intervals and don't hammer your university's servers with requests. They will block this method and you otherwise.
 
@@ -84,7 +88,7 @@ Once configured, you can run the script from your terminal.
 python class-search.py
 ```
 
-The script will run continuously, checking courses at the intervals defined in `config.json`. Once **any** of the courses is found to have an open seat, the script will send an email and exit. You will have to then adjust your config and restart the script to monitor any other courses. Run it in tmux or screen for best results.
+The script will run continuously, checking courses at the intervals defined in `config.json`. Once **any** of the courses is found to have an open seat, the script will send an email (and SMS if configured) and exit. You will have to then adjust your config and restart the script to monitor any other courses. Run it in tmux or screen for best results.
 
 ### Debug mode
 
